@@ -36,6 +36,22 @@ namespace Personal.IdentityServer6Demo.IdP
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
                     }
+                },
+                new Client
+                {
+                    ClientId = "web-net-framework",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    ClientSecrets =
+                    {
+                        new Secret("web-secret".Sha256())
+                    },
+                    RedirectUris = { "https://localhost:44301/" },
+                    PostLogoutRedirectUris = { "https://localhost:44301/" },
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
                 }
             };
     }

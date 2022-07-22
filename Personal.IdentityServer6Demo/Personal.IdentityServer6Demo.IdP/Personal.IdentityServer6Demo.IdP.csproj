@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="Duende.IdentityServer" Version="6.1.2" />
+    <PackageReference Include="Microsoft.Owin.Host.SystemWeb" Version="4.2.2" />
+    <PackageReference Include="Microsoft.Owin.Security.Cookies" Version="4.2.2" />
+    <PackageReference Include="Microsoft.Owin.Security.OpenIdConnect" Version="4.2.2" />
   </ItemGroup>
 
 </Project>
