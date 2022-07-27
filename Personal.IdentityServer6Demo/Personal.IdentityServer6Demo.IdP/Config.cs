@@ -1,5 +1,6 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using IdentityModel;
 
 namespace Personal.IdentityServer6Demo.IdP
 {
@@ -10,6 +11,11 @@ namespace Personal.IdentityServer6Demo.IdP
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResources.Email(),
+                new IdentityResource("custom.profile", new[] { JwtClaimTypes.Name, JwtClaimTypes.Email })
+                {
+                    Required = true 
+                }
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -27,31 +33,36 @@ namespace Personal.IdentityServer6Demo.IdP
                     AllowedGrantTypes = GrantTypes.Code,
                     ClientSecrets =
                     {
-                        new Secret("web-secret".Sha256())
+                        new Secret("secret".Sha256())
                     },
                     RedirectUris = { "https://localhost:5002/signin-oidc" },
                     PostLogoutRedirectUris = { "https://localhost:5002/signout-callback-oidc" },
+                    RequirePkce = false,
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "custom.profile"
                     }
                 },
                 new Client
                 {
-                    ClientId = "web-net-framework",
-                    AllowedGrantTypes = GrantTypes.Code,
+                    ClientId = "viedoc-web",
+                    AllowedGrantTypes = GrantTypes.Hybrid,
                     ClientSecrets =
                     {
-                        new Secret("web-secret".Sha256())
+                        new Secret("viedoc-secret".Sha256())
                     },
-                    RedirectUris = { "https://localhost:44301/" },
-                    PostLogoutRedirectUris = { "https://localhost:44301/" },
+                    RedirectUris = { "https://localhost:44301/callback" },
+                    PostLogoutRedirectUris = { "https://localhost:44301/signout-callback-odic" },
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
-                    }
+                    },
+                    RequirePkce = false,
+                    AlwaysIncludeUserClaimsInIdToken = true,
+                    AlwaysSendClientClaims = true
                 }
             };
     }

@@ -36,9 +36,12 @@ namespace Personal.IdentityServer6Demo.WebNetFramework.Controllers
         /// </summary>
         public void SignOut()
         {
-            HttpContext.GetOwinContext().Authentication.SignOut(
-                    OpenIdConnectAuthenticationDefaults.AuthenticationType,
-                    CookieAuthenticationDefaults.AuthenticationType);
+            HttpContext.GetOwinContext().Authentication.SignOut(new AuthenticationProperties
+                {
+                    RedirectUri = "/"
+                },
+                OpenIdConnectAuthenticationDefaults.AuthenticationType,
+                CookieAuthenticationDefaults.AuthenticationType);
         }
     }
 }

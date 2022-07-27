@@ -15,14 +15,17 @@ builder.Services.AddAuthentication(options =>
         options.Authority = "https://localhost:5001";
 
         options.ClientId = "web";
-        options.ClientSecret = "web-secret";
+        options.ClientSecret = "secret";
         options.ResponseType = "code";
 
         options.Scope.Clear();
         options.Scope.Add("openid");
         options.Scope.Add("profile");
+        options.Scope.Add("custom.profile");
 
         options.SaveTokens = true;
+        options.UsePkce = false;
+        options.GetClaimsFromUserInfoEndpoint = true;
     });
 
 // Add services to the container.
